@@ -184,7 +184,10 @@ if ${BUILD_CARLAUE4} ; then
     if ${USE_MAKEFILES}; then
       log "Generate Unreal project files."
       ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
+      log "Build CarlaUE4 project."
+      make CarlaUE4Editor ARGS="-Timestamps -Log=\"${PWD}/Output.log\""
     else
+      log "Build CarlaUE4 project."
       bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
         CarlaUE4Editor \
         Linux \
@@ -197,13 +200,9 @@ if ${BUILD_CARLAUE4} ; then
 
   fi
 
-  log "Build CarlaUE4 project."
-  make CarlaUE4Editor ARGS="-Timestamps -Log=\"${PWD}/Output.log\""
-
   #Providing the user with the ExportedMaps folder
   EXPORTED_MAPS="${CARLAUE4_ROOT_FOLDER}/Content/Carla/ExportedMaps"
   mkdir -p "${EXPORTED_MAPS}"
-
 
 fi
 
