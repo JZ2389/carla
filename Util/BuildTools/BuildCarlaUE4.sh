@@ -114,7 +114,16 @@ if ${HARD_CLEAN} ; then
 
   log "Doing a \"hard\" clean of the Unreal Engine project."
 
-  make CarlaUE4Editor ARGS=-clean
+  if ${USE_MAKEFILES}; then
+    make CarlaUE4Editor ARGS=-clean
+  else
+    bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
+      CarlaUE4Editor \
+      Linux \
+      Development \
+      -project="${PWD}/CarlaUE4.uproject" \
+      -clean
+  fi
 
 fi
 
@@ -132,9 +141,11 @@ if ${REMOVE_INTERMEDIATE} ; then
 
   rm -Rf ${UE4_INTERMEDIATE_FOLDERS}
 
-  cd Plugins
-  rm -Rf HoudiniEngine
-  cd ..
+  if [ -d ${PWD}/Plugins ]; then
+    cd Plugins
+    rm -Rf HoudiniEngine
+    cd ..
+  fi
 
   popd >/dev/null
 
@@ -185,7 +196,7 @@ if ${BUILD_CARLAUE4} ; then
       log "Generate Unreal project files."
       ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
       log "Build CarlaUE4 project."
-      make CarlaUE4Editor ARGS="-Timestamps -Log=\"${PWD}/Output.log\""
+      make CarlaUE4Editor ARGS="-Timestamps"
     else
       log "Build CarlaUE4 project."
       bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
@@ -194,7 +205,9 @@ if ${BUILD_CARLAUE4} ; then
         Development \
         -project="${PWD}/CarlaUE4.uproject" \
         -game \
-        -engine
+        -engine \
+        -Timestamps \
+        -WaitMutex
     fi
     set -e
 
