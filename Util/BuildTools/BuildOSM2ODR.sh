@@ -93,7 +93,7 @@ if ${BUILD_OSM2ODR} ; then
   export PATH="$UE4_ROOT/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v17_clang-10.0.1-centos7/x86_64-unknown-linux-gnu/bin:$PATH"
 
   cmake ${OSM2ODR_SOURCE_FOLDER} \
-      -G "Eclipse CDT4 - Ninja" \
+        -G Ninja \
       -DCMAKE_CXX_FLAGS="-stdlib=libstdc++" \
       -DCMAKE_INSTALL_PREFIX=${LIBCARLA_INSTALL_CLIENT_FOLDER} \
       -DPROJ_INCLUDE_DIR=${CARLA_BUILD_FOLDER}/proj-install/include \
@@ -115,7 +115,7 @@ if ${BUILD_OSM2ODR} ; then
   echo $LLVM_LIBPATH
 
   cmake ${OSM2ODR_SOURCE_FOLDER} \
-      -G "Eclipse CDT4 - Ninja" \
+        -G Ninja \
       -DCMAKE_CXX_FLAGS="-fPIC -std=c++14 -stdlib=libc++ -I${LLVM_INCLUDE} -L${LLVM_LIBPATH}" \
       -DCMAKE_INSTALL_PREFIX=${LIBCARLA_INSTALL_SERVER_FOLDER} \
       -DPROJ_INCLUDE_DIR=${CARLA_BUILD_FOLDER}/proj-install-server/include \
@@ -134,7 +134,7 @@ if ${BUILD_OSM2ODR} ; then
   LLVM_LIBPATH="$UE4_ROOT/Engine/Source/ThirdParty/Linux/LibCxx/lib/Linux/x86_64-unknown-linux-gnu"
 
   cmake ${OSM2ODR_SOURCE_FOLDER} \
-      -G "Eclipse CDT4 - Ninja" \
+      -G Ninja \
       -DCMAKE_CXX_FLAGS="-fPIC -std=c++14 -stdlib=libc++ -I${LLVM_INCLUDE} -L${LLVM_LIBPATH}" \
       -DCMAKE_INSTALL_PREFIX=${LIBCARLA_INSTALL_SERVER_FOLDER} \
       -DPROJ_INCLUDE_DIR=${CARLA_BUILD_FOLDER}/proj-install-server/include \
