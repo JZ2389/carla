@@ -81,9 +81,9 @@ else
       -DCMAKE_INSTALL_PREFIX="../${UNCRUSTIFY_BASENAME}-install" \
       ../${UNCRUSTIFY_BASENAME}-source
 
-  ninja
+  cmake --build .
 
-  ninja install
+  cmake --install .
 
   popd >/dev/null
 

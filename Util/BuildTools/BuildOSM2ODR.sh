@@ -101,8 +101,8 @@ if ${BUILD_OSM2ODR} ; then
       -DXercesC_INCLUDE_DIR=${CARLA_BUILD_FOLDER}/xerces-c-3.2.3-install/include \
       -DXercesC_LIBRARY=${CARLA_BUILD_FOLDER}/xerces-c-3.2.3-install/lib/libxerces-c.a
 
-  ninja osm2odr
-  ninja install
+  cmake --build . --target osm2odr
+  cmake --install .
 
   mkdir -p ${OSM2ODR_SERVER_BUILD_FOLDER}
   cd ${OSM2ODR_SERVER_BUILD_FOLDER}
@@ -123,8 +123,8 @@ if ${BUILD_OSM2ODR} ; then
       -DXercesC_INCLUDE_DIR=${CARLA_BUILD_FOLDER}/xerces-c-3.2.3-install-server/include \
       -DXercesC_LIBRARY=${CARLA_BUILD_FOLDER}/xerces-c-3.2.3-install-server/lib/libxerces-c.a
 
-  ninja osm2odr
-  ninja install
+  cmake --build . --target osm2odr
+  cmake --install .
 
   mkdir -p ${OSM2ODR_SERVER_BUILD_FOLDER}
   cd ${OSM2ODR_SERVER_BUILD_FOLDER}
@@ -142,8 +142,8 @@ if ${BUILD_OSM2ODR} ; then
       -DXercesC_INCLUDE_DIR=${CARLA_BUILD_FOLDER}/xerces-c-3.2.3-install-server/include \
       -DXercesC_LIBRARY=${CARLA_BUILD_FOLDER}/xerces-c-3.2.3-install-server/lib/libxerces-c.a
 
-  ninja osm2odr
-  ninja install
+  cmake --build . --target osm2odr
+  cmake --install .
 
 fi
 

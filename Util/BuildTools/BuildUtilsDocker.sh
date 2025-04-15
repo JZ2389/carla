@@ -47,14 +47,14 @@ fi
 
 set +e
 
-ninja
+cmake --build .
 
 if [ $? -eq 1 ]; then
   fatal_error "Make sure \"libxml2-dev\" is installed using:\n\n    sudo apt-get install libxml2-dev\n"
   exit 1
 fi
 
-ninja install
+cmake --install .
 
 set -e
 

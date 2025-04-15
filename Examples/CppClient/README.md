@@ -48,8 +48,8 @@ cmake \
     -DCMAKE_INSTALL_PREFIX=/path/to/install-folder \
     /path/to/carla-root-folder
 
-ninja
-ninja install
+cmake --build .
+cmake --install .
 ```
 
 This will generate the following structure at the provided install path

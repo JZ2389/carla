@@ -322,8 +322,8 @@ IF "%USE_ROS2%"=="true" (
       -DCMAKE_CXX_FLAGS_RELEASE="-D_GLIBCXX_USE_CXX11_ABI=0" ^
       -DFOONATHAN_MEMORY_FORCE_VENDORED_BUILD=ON ^
       ..
-    ninja
-    ninja install
+    cmake --build .
+    cmake --install .
     popd >nul
     rmdir /s /q "%FOONATHAN_MEMORY_VENDOR_SOURCE_DIR%"
 
@@ -337,8 +337,8 @@ IF "%USE_ROS2%"=="true" (
       -DCMAKE_INSTALL_PREFIX="%FASTDDS_INSTALL_DIR%" ^
       -DCMAKE_CXX_FLAGS_RELEASE="-D_GLIBCXX_USE_CXX11_ABI=0" ^
       ..
-    ninja
-    ninja install
+    cmake --build .
+    cmake --install .
     popd >nul
     rmdir /s /q "%FAST_CDR_SOURCE_DIR%"
 
@@ -353,8 +353,8 @@ IF "%USE_ROS2%"=="true" (
       -DCMAKE_CXX_FLAGS=-latomic ^
       -DCMAKE_CXX_FLAGS_RELEASE="-D_GLIBCXX_USE_CXX11_ABI=0" ^
       ..
-    ninja
-    ninja install
+    cmake --build .
+    cmake --install .
     popd >nul
     rmdir /
   )
