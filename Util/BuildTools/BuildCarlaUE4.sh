@@ -17,6 +17,7 @@ USE_CHRONO=false
 USE_PYTORCH=false
 USE_UNITY=true
 USE_ROS2=false
+USE_MAKEFILES=false
 
 EDITOR_FLAGS=""
 
@@ -69,6 +70,9 @@ while [[ $# -gt 0 ]]; do
       shift ;;
     --no-unity )
       USE_UNITY=false
+      shift ;;
+    --makefiles )
+      USE_MAKEFILES=true
       shift ;;
     -h | --help )
       echo "$DOC_STRING"
@@ -177,14 +181,24 @@ if ${BUILD_CARLAUE4} ; then
 
     # This command fails sometimes but normally we can continue anyway.
     set +e
-    log "Generate Unreal project files."
-    ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
+    if ${USE_MAKEFILES}; then
+      log "Generate Unreal project files."
+      ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
+    else
+      bash "$(UE4_ROOT)/Engine/Build/BatchFiles/Linux/Build.sh" \
+        CarlaUE4Editor \
+        Linux \
+        Development \
+        -project="${PWD}/CarlaUE4.uproject" \
+        -game \
+        -engine
+    fi
     set -e
 
   fi
 
   log "Build CarlaUE4 project."
-  make CarlaUE4Editor
+  make CarlaUE4Editor ARGS="-Timestamps -Log=\"${PWD}/Output.log\""
 
   #Providing the user with the ExportedMaps folder
   EXPORTED_MAPS="${CARLAUE4_ROOT_FOLDER}/Content/Carla/ExportedMaps"
