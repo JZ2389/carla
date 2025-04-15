@@ -185,7 +185,7 @@ if ${BUILD_CARLAUE4} ; then
       log "Generate Unreal project files."
       ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
     else
-      bash "$(UE4_ROOT)/Engine/Build/BatchFiles/Linux/Build.sh" \
+      bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
         CarlaUE4Editor \
         Linux \
         Development \
