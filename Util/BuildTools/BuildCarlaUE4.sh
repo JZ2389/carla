@@ -188,29 +188,27 @@ if ${BUILD_CARLAUE4} ; then
   OPTIONAL_MODULES_TEXT="Fast_dds ON"$'\n'"${OPTIONAL_MODULES_TEXT}"
   echo ${OPTIONAL_MODULES_TEXT} > ${PWD}/Config/OptionalModules.ini
 
-  if [ ! -f Makefile ]; then
-
-    # This command fails sometimes but normally we can continue anyway.
-    set +e
-    if ${USE_MAKEFILES}; then
-      log "Generate Unreal project files."
-      ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
-      log "Build CarlaUE4 project."
-      make CarlaUE4Editor ARGS="-Timestamps"
-    else
-      log "Build CarlaUE4 project."
-      bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
-        CarlaUE4Editor \
-        Linux \
-        Development \
-        -project="${PWD}/CarlaUE4.uproject" \
-        -game \
-        -engine \
-        -Timestamps \
-        -WaitMutex
+  # This command fails sometimes but normally we can continue anyway.
+  if ${USE_MAKEFILES}; then
+    if [ ! -f Makefile ]; then
+        log "Generate Unreal project files."
+        set +e
+        ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
+        set -e
     fi
-    set -e
-
+    log "Build CarlaUE4 project."
+    make CarlaUE4Editor ARGS="-Timestamps"
+  else
+    log "Build CarlaUE4 project."
+    bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
+      CarlaUE4Editor \
+      Linux \
+      Development \
+      -project="${PWD}/CarlaUE4.uproject" \
+      -game \
+      -engine \
+      -Timestamps \
+      -WaitMutex
   fi
 
   #Providing the user with the ExportedMaps folder
