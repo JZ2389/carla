@@ -180,7 +180,7 @@ function build_libcarla {
   if ${NEEDS_CMAKE} ; then
 
     cmake \
-        -G Ninja \
+        -G "Eclipse CDT4 - Ninja" \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE:-$1} \
         -DLIBCARLA_BUILD_DEBUG=${M_DEBUG} \
         -DLIBCARLA_BUILD_RELEASE=${M_RELEASE} \
