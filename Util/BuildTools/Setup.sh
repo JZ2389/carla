@@ -203,9 +203,9 @@ else
       -DCMAKE_INSTALL_PREFIX="../${RPCLIB_BASENAME}-libcxx-install" \
       ../${RPCLIB_BASENAME}-source
 
-  cmake --build .
+  ninja
 
-  cmake --install .
+  ninja install
 
   popd >/dev/null
 
@@ -220,9 +220,9 @@ else
       -DCMAKE_INSTALL_PREFIX="../${RPCLIB_BASENAME}-libstdcxx-install" \
       ../${RPCLIB_BASENAME}-source
 
-  cmake --build .
+  ninja
 
-  cmake --install .
+  ninja install
 
   popd >/dev/null
 
@@ -272,9 +272,9 @@ else
       -DCMAKE_INSTALL_PREFIX="../${GTEST_BASENAME}-libcxx-install" \
       ../${GTEST_BASENAME}-source
 
-  cmake --build .
+  ninja
 
-  cmake --install .
+  ninja install
 
   popd >/dev/null
 
@@ -289,9 +289,9 @@ else
       -DCMAKE_INSTALL_PREFIX="../${GTEST_BASENAME}-libstdcxx-install" \
       ../${GTEST_BASENAME}-source
 
-  cmake --build .
+  ninja
 
-  cmake --install .
+  ninja install
 
   popd >/dev/null
 
@@ -345,9 +345,9 @@ else
       -DRECASTNAVIGATION_TEST=False \
       ../${RECAST_BASENAME}-source
 
-  cmake --build .
+  ninja
 
-  cmake --install .
+  ninja install
 
   popd >/dev/null
 
@@ -458,8 +458,8 @@ else
       -Dtranscoder=gnuiconv \
       -Dnetwork=OFF \
       ..
-  cmake --build .
-  cmake --install .
+  ninja
+  ninja install
 
   popd >/dev/null
 
@@ -475,8 +475,8 @@ else
       -Dtranscoder=gnuiconv \
       -Dnetwork=OFF \
       ..
-  cmake --build .
-  cmake --install .
+  ninja
+  ninja install
 
   popd >/dev/null
 
@@ -606,8 +606,8 @@ if ${USE_CHRONO} ; then
         -DCMAKE_BUILD_TYPE=Release \
         -DENABLE_MODULE_VEHICLE=ON \
         ..
-    cmake --build .
-    cmake --install .
+    ninja
+    ninja install
 
     popd >/dev/null
 
@@ -724,8 +724,8 @@ else
       -DBUILD_CCT=OFF -DBUILD_CS2CS=OFF -DBUILD_GEOD=OFF -DBUILD_GIE=OFF \
       -DBUILD_PROJ=OFF -DBUILD_TESTING=OFF \
       -DCMAKE_INSTALL_PREFIX=${PROJ_INSTALL_DIR_FULL}
-  cmake --build .
-  cmake --install .
+  ninja
+  ninja install
 
   popd >/dev/null
 
@@ -742,8 +742,8 @@ else
       -DBUILD_CCT=OFF -DBUILD_CS2CS=OFF -DBUILD_GEOD=OFF -DBUILD_GIE=OFF \
       -DBUILD_PROJ=OFF -DBUILD_TESTING=OFF \
       -DCMAKE_INSTALL_PREFIX=${PROJ_INSTALL_SERVER_DIR_FULL}
-  cmake --build .
-  cmake --install .
+  ninja
+  ninja install
 
   popd >/dev/null
 
@@ -928,8 +928,8 @@ if ${USE_ROS2} ; then
       -DCMAKE_CXX_FLAGS_RELEASE="-D_GLIBCXX_USE_CXX11_ABI=0" \
       -DFOONATHAN_MEMORY_FORCE_VENDORED_BUILD=ON \
       ..
-    cmake --build .
-    cmake --install .
+    ninja
+    ninja install
     popd >/dev/null
     rm -Rf ${FOONATHAN_MEMORY_VENDOR_SOURCE_DIR}
 
@@ -944,8 +944,8 @@ if ${USE_ROS2} ; then
       -DCMAKE_INSTALL_PREFIX="${FASTDDS_INSTALL_DIR}" \
       -DCMAKE_CXX_FLAGS_RELEASE="-D_GLIBCXX_USE_CXX11_ABI=0" \
       ..
-    cmake --build .
-    cmake --install .
+    ninja
+    ninja install
     popd >/dev/null
     rm -Rf ${FAST_CDR_SOURCE_DIR}
 
@@ -963,8 +963,8 @@ if ${USE_ROS2} ; then
       -DTHIRDPARTY_Asio=FORCE \
       -DTHIRDPARTY_TinyXML2=FORCE \
       ..
-    cmake --build .
-    cmake --install .
+    ninja
+    ninja install
     popd >/dev/null
     rm -Rf ${FAST_DDS_LIB_SOURCE_DIR}
 

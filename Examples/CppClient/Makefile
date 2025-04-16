@@ -55,7 +55,7 @@ build_libcarla: $(TOOLCHAIN)
 			$(CARLADIR); \
 	  fi; \
 		ninja; \
-		cmake --install . | grep -v "Up-to-date:"; \
+		ninja install | grep -v "Up-to-date:"; \
 	}
 
 $(TOOLCHAIN):

@@ -190,15 +190,13 @@ function build_libcarla {
         ${CMAKE_EXTRA_OPTIONS} \
         ${CARLA_ROOT_FOLDER}
 
-    log "Getting LibCarla checksum"
     get_source_code_checksum > ${CHECKSUM_FILE}
-    log "Getting LibCarla checksum - Done"
 
   fi
 
-  cmake --build .
+  ninja
 
-  cmake --install . | grep -v "Up-to-date:"
+  ninja install | grep -v "Up-to-date:"
 
   popd >/dev/null
 }
