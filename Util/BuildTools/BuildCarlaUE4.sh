@@ -17,6 +17,7 @@ USE_CHRONO=false
 USE_PYTORCH=false
 USE_UNITY=true
 USE_ROS2=false
+USE_MAKEFILES=false
 
 EDITOR_FLAGS=""
 
@@ -70,6 +71,9 @@ while [[ $# -gt 0 ]]; do
     --no-unity )
       USE_UNITY=false
       shift ;;
+    --makefiles )
+      USE_MAKEFILES=true
+      shift ;;
     -h | --help )
       echo "$DOC_STRING"
       echo "$USAGE_STRING"
@@ -110,7 +114,16 @@ if ${HARD_CLEAN} ; then
 
   log "Doing a \"hard\" clean of the Unreal Engine project."
 
-  make CarlaUE4Editor ARGS=-clean
+  if ${USE_MAKEFILES}; then
+    make CarlaUE4Editor ARGS=-clean
+  else
+    bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
+      CarlaUE4Editor \
+      Linux \
+      Development \
+      -project="${PWD}/CarlaUE4.uproject" \
+      -clean
+  fi
 
 fi
 
@@ -128,9 +141,11 @@ if ${REMOVE_INTERMEDIATE} ; then
 
   rm -Rf ${UE4_INTERMEDIATE_FOLDERS}
 
-  cd Plugins
-  rm -Rf HoudiniEngine
-  cd ..
+  if [ -d ${PWD}/Plugins ]; then
+    cd Plugins
+    rm -Rf HoudiniEngine
+    cd ..
+  fi
 
   popd >/dev/null
 
@@ -173,23 +188,32 @@ if ${BUILD_CARLAUE4} ; then
   OPTIONAL_MODULES_TEXT="Fast_dds ON"$'\n'"${OPTIONAL_MODULES_TEXT}"
   echo ${OPTIONAL_MODULES_TEXT} > ${PWD}/Config/OptionalModules.ini
 
-  if [ ! -f Makefile ]; then
-
-    # This command fails sometimes but normally we can continue anyway.
-    set +e
-    log "Generate Unreal project files."
-    ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
-    set -e
-
+  # This command fails sometimes but normally we can continue anyway.
+  if ${USE_MAKEFILES}; then
+    if [ ! -f Makefile ]; then
+        log "Generate Unreal project files."
+        set +e
+        ${UE4_ROOT}/GenerateProjectFiles.sh -project="${PWD}/CarlaUE4.uproject" -game -engine -makefiles
+        set -e
+    fi
+    log "Build CarlaUE4 project."
+    make CarlaUE4Editor ARGS="-Timestamps"
+  else
+    log "Build CarlaUE4 project."
+    bash "${UE4_ROOT}/Engine/Build/BatchFiles/Linux/Build.sh" \
+      CarlaUE4Editor \
+      Linux \
+      Development \
+      -project="${PWD}/CarlaUE4.uproject" \
+      -game \
+      -engine \
+      -Timestamps \
+      -WaitMutex
   fi
-
-  log "Build CarlaUE4 project."
-  make CarlaUE4Editor
 
   #Providing the user with the ExportedMaps folder
   EXPORTED_MAPS="${CARLAUE4_ROOT_FOLDER}/Content/Carla/ExportedMaps"
   mkdir -p "${EXPORTED_MAPS}"
-
 
 fi
 
