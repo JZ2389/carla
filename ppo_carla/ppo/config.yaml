@@ -1,0 +1,11 @@
+# PPO Hyperparameters
+lr: 3e-4
+n_steps: 2048
+batch_size: 64
+clip_range: 0.2
+gamma: 0.99
+total_steps: 200000
+
+# CARLA
+town: "Town03"
+weather_id: 1
